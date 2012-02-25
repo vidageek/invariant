@@ -15,5 +15,9 @@ repositories {
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 dependencies {
-	testCompile 'junit:junit:4.10'
+	compile 'junit:junit:4.10'
+	compile 'org.slf4j:slf4j-api:1.6.1'
+	compile 'org.slf4j:slf4j-log4j12:1.6.1'
+	
+	testCompile 'log4j:log4j:1.2.16'
 }
