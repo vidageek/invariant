@@ -28,10 +28,14 @@ final public class InvariantStatement extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		evaluate(new File("."));
+		evaluate(new File(".").getCanonicalFile());
 	}
 
 	private void evaluate(final File file) throws Throwable {
+		if (file.isHidden()) {
+			log.debug("Rejecting " + file.getAbsolutePath() + " because it is hidden.");
+			return;
+		}
 		if (file.isFile()) {
 			if (toApply.matcher(file.getAbsolutePath()).matches()) {
 				evaluateAt(file);

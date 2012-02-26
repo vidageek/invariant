@@ -1,6 +1,7 @@
 package net.vidageek.invariant;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -31,4 +32,8 @@ final public class InvariantUseDefinition {
 		assertTrue(files.contains("c.cfx"));
 	}
 
+	@Invariant
+	public void doesNotVisitHiddenFiles(final FileData data) {
+		assertFalse(data.getName().contains(".gitignore"));
+	}
 }
