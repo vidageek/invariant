@@ -43,4 +43,12 @@ final public class InvariantUseDefinition {
 		assertTrue(data.getName().endsWith("java"));
 	}
 
+	@Invariant(affects = ".*\\.cfx")
+	public void getsContentFromFiles(final FileData data) {
+		if (data.getName().equals("c.cfx")) {
+			assertEquals("", data.getContent());
+		} else {
+			assertEquals("content", data.getContent());
+		}
+	}
 }
