@@ -37,7 +37,7 @@ final public class InvariantRunner extends BlockJUnit4ClassRunner {
 
 	@Override
 	protected Statement methodBlock(final FrameworkMethod method) {
-		return new InvariantStatement(method);
+		return new InvariantStatement(method.getMethod(), getTestClass().getJavaClass());
 	}
 
 	private String asString(final List<FrameworkMethod> methods) {
