@@ -18,19 +18,22 @@ final public class InvariantStatement extends Statement {
 
 	private final Class<?> type;
 	private final Method method;
-	private final Pattern toApply;
-	private int counter = 0;
+	private final Pattern toEval;
+	private int evaluatedFiles = 0;
+
+	private final String startFolder;
 
 	public InvariantStatement(final Method method, final Class<?> type) {
 		this.method = method;
 		this.type = type;
-		toApply = Pattern.compile(method.getAnnotation(Invariant.class).affects());
+		toEval = Pattern.compile(method.getAnnotation(Invariant.class).affects());
+		startFolder = method.getAnnotation(Invariant.class).folder();
 	}
 
 	@Override
 	public void evaluate() throws Throwable {
-		evaluate(new File(".").getCanonicalFile());
-		if (counter == 0) {
+		evaluate(new File(new File(".").getCanonicalFile(), startFolder));
+		if (evaluatedFiles == 0) {
 			throw new IllegalArgumentException("Invariant " + invariantName()
 					+ " did not find any suitable file. Maybe a regex problem?");
 		}
@@ -42,7 +45,7 @@ final public class InvariantStatement extends Statement {
 			return;
 		}
 		if (file.isFile()) {
-			if (toApply.matcher(file.getAbsolutePath()).matches()) {
+			if (toEval.matcher(file.getAbsolutePath()).matches()) {
 				evaluateAt(file);
 			}
 		} else if (file.isDirectory()) {
@@ -54,7 +57,7 @@ final public class InvariantStatement extends Statement {
 
 	private void evaluateAt(final File file) throws Throwable {
 		try {
-			counter++;
+			evaluatedFiles++;
 			log.debug("Invoking invariant " + invariantName() + " at : " + file.getAbsolutePath());
 			Mirror mirror = new Mirror();
 			Object invariantObject = mirror.on(type).invoke().constructor().withoutArgs();

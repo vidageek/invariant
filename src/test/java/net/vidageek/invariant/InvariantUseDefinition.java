@@ -37,4 +37,10 @@ final public class InvariantUseDefinition {
 		assertFalse(data.getName().contains(".gitignore"));
 	}
 
+	@Invariant(folder = "src/main/java")
+	public void startsAtFolder(final FileData data) {
+		assertFalse(data.getName().endsWith("cfx"));
+		assertTrue(data.getName().endsWith("java"));
+	}
+
 }

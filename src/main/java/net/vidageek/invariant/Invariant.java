@@ -11,4 +11,6 @@ public @interface Invariant {
 
 	String affects() default ".*";
 
+	String folder() default "";
+
 }
