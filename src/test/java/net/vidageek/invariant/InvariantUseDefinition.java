@@ -36,4 +36,5 @@ final public class InvariantUseDefinition {
 	public void doesNotVisitHiddenFiles(final FileData data) {
 		assertFalse(data.getName().contains(".gitignore"));
 	}
+
 }
