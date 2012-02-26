@@ -31,4 +31,8 @@ final public class FileData {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public File getFile() {
+		return file;
+	}
 }

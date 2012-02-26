@@ -2,6 +2,7 @@ package net.vidageek.invariant;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -41,6 +42,12 @@ final public class InvariantUseDefinition {
 	public void startsAtFolder(final FileData data) {
 		assertFalse(data.getName().endsWith("cfx"));
 		assertTrue(data.getName().endsWith("java"));
+	}
+
+	@Invariant
+	public void canAccessFile(final FileData data) {
+		assertNotNull(data.getFile());
+		assertTrue(data.getFile().getAbsolutePath().endsWith(data.getName()));
 	}
 
 	@Invariant(affects = ".*\\.cfx")
