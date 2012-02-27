@@ -3,6 +3,7 @@ package net.vidageek.invariant;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 final public class FileData {
@@ -19,8 +20,9 @@ final public class FileData {
 	}
 
 	public String getContent() {
+		BufferedReader reader = null;
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			StringBuffer buffer = new StringBuffer();
 			String line = "";
 			while ((line = reader.readLine()) != null) {
@@ -29,6 +31,14 @@ final public class FileData {
 			return buffer.toString();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
 		}
 	}
 
