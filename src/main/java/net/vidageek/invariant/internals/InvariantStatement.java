@@ -42,7 +42,8 @@ final public class InvariantStatement extends Statement {
 		evaluate(startPoint);
 		if (evaluatedFiles == 0) {
 			throw new IllegalArgumentException("Invariant " + invariantName()
-					+ " did not find any suitable file. Maybe a regex problem?");
+					+ " did not find any suitable file. The test started to run at " + startPoint.getAbsolutePath()
+					+ ". Maybe a regex problem?");
 		}
 		if (failures.size() != 0) {
 			throw new InvariantError(failures);
