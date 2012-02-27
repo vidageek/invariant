@@ -23,8 +23,8 @@ final public class FileData {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			StringBuffer buffer = new StringBuffer();
-			String line = "";
+			StringBuilder buffer = new StringBuilder();
+			String line;
 			while ((line = reader.readLine()) != null) {
 				buffer.append(line);
 			}
