@@ -37,7 +37,9 @@ final public class InvariantStatement extends Statement {
 
 	@Override
 	public void evaluate() throws Throwable {
-		evaluate(new File(new File(".").getCanonicalFile(), startFolder));
+		final File startPoint = new File(new File(".").getCanonicalFile(), startFolder);
+		log.info("Starting runner at " + startPoint.getAbsolutePath());
+		evaluate(startPoint);
 		if (evaluatedFiles == 0) {
 			throw new IllegalArgumentException("Invariant " + invariantName()
 					+ " did not find any suitable file. Maybe a regex problem?");
