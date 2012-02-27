@@ -75,7 +75,7 @@ final public class InvariantStatement extends Statement {
 			if (AssertionError.class.isAssignableFrom(cause.getClass())) {
 				failures.add(new Failure(cause, invariantName(), file.getAbsolutePath()));
 			} else {
-				throw e;
+				throw cause;
 			}
 		}
 	}
