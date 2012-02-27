@@ -72,6 +72,9 @@ final public class InvariantStatement extends Statement {
 			mirror.on(invariantObject).invoke().method(method).withArgs(new FileData(file));
 		} catch (MirrorException e) {
 			Throwable cause = e.getCause();
+			if (cause == null) {
+				throw e;
+			}
 			if (AssertionError.class.isAssignableFrom(cause.getClass())) {
 				failures.add(new Failure(cause, invariantName(), file.getAbsolutePath()));
 			} else {
