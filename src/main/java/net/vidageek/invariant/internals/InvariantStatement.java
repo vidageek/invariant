@@ -2,6 +2,8 @@ package net.vidageek.invariant.internals;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import net.vidageek.invariant.FileData;
@@ -23,11 +25,14 @@ final public class InvariantStatement extends Statement {
 
 	private final String startFolder;
 
+	private final List<Failure> failures;
+
 	public InvariantStatement(final Method method, final Class<?> type) {
 		this.method = method;
 		this.type = type;
 		toEval = Pattern.compile(method.getAnnotation(Invariant.class).affects());
 		startFolder = method.getAnnotation(Invariant.class).folder();
+		failures = new ArrayList<Failure>();
 	}
 
 	@Override
@@ -36,6 +41,9 @@ final public class InvariantStatement extends Statement {
 		if (evaluatedFiles == 0) {
 			throw new IllegalArgumentException("Invariant " + invariantName()
 					+ " did not find any suitable file. Maybe a regex problem?");
+		}
+		if (failures.size() != 0) {
+			throw new InvariantError(failures);
 		}
 	}
 
@@ -65,7 +73,7 @@ final public class InvariantStatement extends Statement {
 		} catch (MirrorException e) {
 			Throwable cause = e.getCause();
 			if (AssertionError.class.isAssignableFrom(cause.getClass())) {
-				throw cause;
+				failures.add(new Failure(cause, invariantName(), file.getAbsolutePath()));
 			} else {
 				throw e;
 			}
