@@ -6,3 +6,7 @@ target
 build
 bin
 classes
+invariant.iml
+invariant.ipr
+invariant.iws
+out
