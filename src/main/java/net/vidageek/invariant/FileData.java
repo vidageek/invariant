@@ -24,7 +24,7 @@ final public class FileData {
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			StringBuilder buffer = new StringBuilder();
-			String line = "";
+			String line;
 			while ((line = reader.readLine()) != null) {
 				buffer.append(line);
 			}
