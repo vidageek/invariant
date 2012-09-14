@@ -38,7 +38,7 @@ final public class InvariantStatement extends Statement {
 	@Override
 	public void evaluate() throws Throwable {
 		final File startPoint = new File(new File(System.getProperty("invariant.root", ".")).getCanonicalFile(),
-				startFolder);
+				startFolder).getCanonicalFile();
 		log.info("Starting runner at " + startPoint.getAbsolutePath());
 		evaluate(startPoint);
 		if (evaluatedFiles == 0) {

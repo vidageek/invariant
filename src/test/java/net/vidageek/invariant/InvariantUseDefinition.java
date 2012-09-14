@@ -58,4 +58,9 @@ final public class InvariantUseDefinition {
 			assertEquals("content", data.getContent());
 		}
 	}
+
+	@Invariant(folder = "..")
+	public void findFilesOnRelativeFolders(final FileData data) {
+
+	}
 }
